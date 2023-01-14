@@ -1,41 +1,45 @@
 #include <stdio.h>
-#include <stdlib.h>
+#define MAX 100000
+void pop(void);
+void push(int data);
+
+int arr[MAX], top = -1;
 
 int main()
 {
-	int num = 0;
-	int arr2[10000];
+	int input, data, sum = 0;
+	scanf_s("%d", &input);
 
-	scanf_s("%d", &num);
-	int* arr = (int*)malloc(num * sizeof(int));
-
-	for (int i = 0; i < num; i++)
+	for (int i = 0; i < input; i++)
 	{
-		scanf_s("%d", &arr[i]);
-	}
-	int idx = 0;
-	for (int i = 0; i < num; i++)
-	{
-		if (arr[i] != 0)
-		{
-			arr2[idx] = arr[i];
-			idx++;
-		}
-	}
-	idx = 0;
-	for (int i = 0; i < num; i++)
-	{
-		if (arr[i] == 0)
-		{
-			arr2[idx] = 0;
-			idx--;
-		}
+		scanf_s("%d", &data);
+		if (data != 0)
+			push(data);
 		else
-			idx++;
+			pop();
 	}
-	int sum = 0;
-	for (int i = 0; i < idx; i++)
-		sum += arr2[i];
+	for (int i = 0; i <= top; i++)
+		sum += arr[i];
 	printf("%d", sum);
 	return 0;
 }
+
+void pop(void)
+{
+	if (top < 0)
+		return;
+	arr[top--] = 0;
+}
+
+void push(int data)
+{
+	if (top == MAX - 1)
+		return;
+	arr[++top] = data;
+}
+
+/*
+top를 -1로 시작하고 push하면 전위연산자로 해서
+입력을 받았을 때 push 함수 호출 안 하면 top는 전 인덱스 값 유지하게 한 거랑
+arr 인덱스 값 변수로 처리한 거 
+*/
