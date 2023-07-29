@@ -1,0 +1,5 @@
+a = input()
+print(type(a))
+print(a)
+print(list(a))
+print(a[1])
